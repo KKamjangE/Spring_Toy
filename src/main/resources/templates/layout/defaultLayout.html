@@ -5,11 +5,12 @@
     <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{css/style.css}">
 </head>
-<body>
+<body class="bg-light">
 <th:block th:replace="~{fragments/headerFragment::header}"></th:block>
 
-<th:block layout:fragment="content"></th:block>
+<div class="d-flex justify-content-center py-5">
+    <th:block layout:fragment="content"></th:block>
+</div>
 
-<th:block th:replace="~{fragments/footerFragment::footer}"></th:block>
 </body>
 </html>
