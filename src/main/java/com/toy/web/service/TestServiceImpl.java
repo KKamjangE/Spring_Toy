@@ -1,6 +1,6 @@
 package com.toy.web.service;
 
-import com.toy.web.domain.TestData;
+import com.toy.web.dto.TestData;
 import com.toy.web.repository.TestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

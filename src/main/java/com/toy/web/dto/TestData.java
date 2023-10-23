@@ -1,4 +1,4 @@
-package com.toy.web.domain;
+package com.toy.web.dto;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
