@@ -4,6 +4,9 @@
     <title>Toy Project</title>
     <link rel="stylesheet" type="text/css" th:href="@{/static/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/style.css}">
+    <script th:inline="javascript">
+        const BASE_URL = "http://localhost:8080";
+    </script>
 </head>
 <body class="bg-light">
 <th:block th:replace="~{fragments/headerFragment::header}"></th:block>
@@ -13,9 +16,9 @@
 </div>
 
 <!-- javascript module -->
-<script th:src="@{/static/js/api/testAPI.js}" th:type="module"></script>
+<script th:src="@{/static/js/code.jquery.com_jquery-3.7.1.min.js}"></script>
 <!-- javascript module -->
 
-<th:block layout:fragment="javascript" th:type="module"></th:block>
+<th:block layout:fragment="javascript"></th:block>
 </body>
 </html>
