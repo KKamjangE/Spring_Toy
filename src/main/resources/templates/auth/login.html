@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/defaultLayout}">
+<body>
+
+<div layout:fragment="content">
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#sign-in-pane" type="button" role="tab" aria-selected="true">
+                Sign-in
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#sign-up-pane" type="button" role="tab" aria-selected="false">
+                Sing-up
+            </button>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <section class="tab-pane show active" id="sign-in-pane" role="tabpanel">
+            <div class="bg-white border-bottom border-start border-end rounded-bottom px-3 py-2 d-flex flex-column">
+                <div class="m-md-3">
+                    <label for="sign-in-id" class="form-label">User ID</label>
+                    <input type="text" id="sign-in-id" name="sign-in-id" class="form-control" placeholder="id">
+                </div>
+                <div class="m-md-3">
+                    <label for="sign-in-password" class="form-label">Password</label>
+                    <input type="password" id="sign-in-password" name="sign-in-password" class="form-control" placeholder="password">
+                </div>
+                <button id="sign-in-btn" class="m-md-3 btn btn-primary">Sign-In</button>
+            </div>
+        </section>
+        <section class="tab-pane" id="sign-up-pane" role="tabpanel">
+            <div class="bg-white border-bottom border-start border-end rounded-bottom px-3 py-2 d-flex flex-column">
+                <div class="m-md-3">
+                    <label for="sign-up-id" class="form-label">User ID</label>
+                    <input type="text" id="sign-up-id" name="user-id" class="form-control" placeholder="id">
+                </div>
+                <div class="m-md-3">
+                    <label for="sign-up-password" class="form-label">Password</label>
+                    <input type="password" id="sign-up-password" name="sign-up-password" class="form-control" placeholder="password">
+                </div>
+                <div class="m-md-3">
+                    <label for="sign-up-password-check" class="form-label">Password Check</label>
+                    <input type="password" id="sign-up-password-check" name="sign-up-password-check" class="form-control" placeholder="password">
+                </div>
+                <div class="m-md-3">
+                    <label for="user-name" class="form-label">User Name</label>
+                    <input type="text" id="user-name" name="user-name" class="form-control" placeholder="name">
+                </div>
+                <button id="sign-up-btn" class="m-md-3 btn btn-primary">Sign-Up</button>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script layout:fragment="javascript" th:src="@{/static/js/login.js}"></script>
+</body>
+</html>
