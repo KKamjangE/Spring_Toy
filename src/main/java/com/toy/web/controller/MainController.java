@@ -7,8 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String main() {
-        return "index.html";
+    public String home() {
+        return "index";
     }
 
+    @GetMapping("/contents/list")
+    public String list() {
+        return "contents/list";
+    }
+
+    @GetMapping("/auth/login")
+    public String login() {
+        return "auth/login";
+    }
 }
