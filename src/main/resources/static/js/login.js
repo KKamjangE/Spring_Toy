@@ -17,19 +17,33 @@ const signInBtn = document.getElementById("sign-in-btn");
 signInBtn.addEventListener("click", login);
 
 const join = () => {
-    const _id = document.getElementById("sign-up-id").value;
-    const password = document.getElementById("sign-up-password").value;
-    const passwordCheck = document.getElementById("sign-up-password-check").value;
-    const userName = document.getElementById("user-name").value;
+    const userId = document.getElementById("sign-up-id");
+    const password = document.getElementById("sign-up-password");
+    const passwordCheck = document.getElementById("sign-up-password-check");
+    const userName = document.getElementById("user-name");
 
-    if(passwordCheck === password) {
+    if(userId.value === "") {
+        alert("아이디를 입력해주세요.");
+        userId.focus();
+        return;
+    } else if(password.value === "") {
+        alert("비밀번호를 입력해주세요.");
+        password.focus();
+        return;
+    } else if(userName.value === "") {
+        alert("이름을 입력해주세요.");
+        userName.focus();
+        return;
+    }
+
+    if(passwordCheck.value === password.value) {
         $.ajax({
             url: `${BASE_URL}/sign/up`,
             type: "post",
             data: {
-                userId: _id,
-                password: password,
-                name: userName
+                userId: userId.value,
+                password: password.value,
+                name: userName.value
             },
             success: (response) => {
                 console.log(response);
