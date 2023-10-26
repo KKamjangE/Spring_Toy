@@ -1,11 +1,14 @@
+/**
+ * 로그인
+ */
 const login = () => {
-    const _id = document.getElementById("sign-in-id").value;
+    const userId = document.getElementById("sign-in-id").value;
     const password = document.getElementById("sign-in-password").value;
     $.ajax({
         url: `${BASE_URL}/sign/in`,
         type: "post",
         data: {
-            _id,
+            userId,
             password
         },
         success: (response) => {
@@ -13,37 +16,41 @@ const login = () => {
         }
     })
 }
+
 const signInBtn = document.getElementById("sign-in-btn");
 signInBtn.addEventListener("click", login);
 
+/**
+ * 회원 가입
+ */
 const join = () => {
-    const userId = document.getElementById("sign-up-id");
-    const password = document.getElementById("sign-up-password");
-    const passwordCheck = document.getElementById("sign-up-password-check");
-    const userName = document.getElementById("user-name");
+    const userIdElement = document.getElementById("sign-up-id");
+    const passwordElement = document.getElementById("sign-up-password");
+    const passwordCheckElement = document.getElementById("sign-up-password-check");
+    const userNameElement = document.getElementById("user-name");
 
-    if(userId.value === "") {
+    if(userIdElement.value === "") {
         alert("아이디를 입력해주세요.");
-        userId.focus();
+        userIdElement.focus();
         return;
-    } else if(password.value === "") {
+    } else if(passwordElement.value === "") {
         alert("비밀번호를 입력해주세요.");
-        password.focus();
+        passwordElement.focus();
         return;
-    } else if(userName.value === "") {
+    } else if(userNameElement.value === "") {
         alert("이름을 입력해주세요.");
-        userName.focus();
+        userNameElement.focus();
         return;
     }
 
-    if(passwordCheck.value === password.value) {
+    if(passwordCheckElement.value === passwordElement.value) {
         $.ajax({
             url: `${BASE_URL}/sign/up`,
             type: "post",
             data: {
-                userId: userId.value,
-                password: password.value,
-                name: userName.value
+                userId: userIdElement.value,
+                password: passwordElement.value,
+                name: userNameElement.value
             },
             success: (response) => {
                 console.log(response);
