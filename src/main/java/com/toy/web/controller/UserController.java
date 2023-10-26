@@ -1,10 +1,10 @@
 package com.toy.web.controller;
 
-import com.toy.web.dto.User;
+import com.toy.web.dto.JoinRequest;
 import com.toy.web.response.ResponseData;
 import com.toy.web.response.ResponseMessage;
 import com.toy.web.response.StatusCode;
-import com.toy.web.service.LoginService;
+import com.toy.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/sign")
-public class LoginController {
+public class UserController {
 
-    private final LoginService loginService;
+    private final UserService userService;
 
     @Autowired
-    public LoginController(LoginService loginService) {
-        this.loginService = loginService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @PostMapping("/in")
@@ -29,12 +29,12 @@ public class LoginController {
     }
 
     @PostMapping("/up")
-    public ResponseEntity<ResponseData> signUp(User user) { // 회원가입
+    public ResponseEntity<ResponseData> signUp(JoinRequest joinRequest) { // 회원가입
 
-        User checkUser = loginService.findByUserId(user.getUserId());
+        JoinRequest checkJoinRequest = userService.findByUserId(joinRequest.getUserId());
 
-        if(checkUser == null) {
-            loginService.join(user);
+        if(checkJoinRequest == null) {
+            userService.join(joinRequest);
             return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.SIGN_UP_SUCCESS), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(ResponseData.res(StatusCode.CONFLICT, ResponseMessage.ALREADY_USER), HttpStatus.OK);
