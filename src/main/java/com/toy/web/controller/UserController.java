@@ -5,10 +5,10 @@ import com.toy.web.response.ResponseData;
 import com.toy.web.response.ResponseMessage;
 import com.toy.web.response.StatusCode;
 import com.toy.web.service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +25,7 @@ public class UserController {
     }
 
     @PostMapping("/in")
-    public String signIn() { // 로그인
-        return "login";
+    public void signIn() { // 로그인
     }
 
     @PostMapping("/up")
@@ -34,9 +33,7 @@ public class UserController {
 
         JoinRequest checkJoinRequest = userService.findByUserId(joinRequest.getUserId());
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(); // BCrypt 암호화 인스턴스 생성
-        String encodedPassword = encoder.encode(joinRequest.getPassword()); // 비밀번호 암호화
-        System.out.println("encodedPassword = " + encodedPassword); // 암호화된 비밀번호로 변경
+        String encodedPassword = BCrypt.hashpw(joinRequest.getPassword(), BCrypt.gensalt());
         joinRequest.setPassword(encodedPassword);
 
         if(checkJoinRequest == null) {
