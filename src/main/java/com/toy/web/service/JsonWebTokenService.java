@@ -13,9 +13,6 @@ import java.util.Map;
 @Service
 public class JsonWebTokenService {
 
-    @Value("${jwt.secretkey}")
-    private String secretKey; // jwt에 들어갈 시크릿 키
-
     @Value("${jwt.expritation}")
     private long expiration; // jwt 유효기간
 
