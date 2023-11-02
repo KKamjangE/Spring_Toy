@@ -44,6 +44,7 @@ public class UserController {
             Map<String, Object> responseBody = new HashMap<>();
             responseBody.put("jwt", token);
             responseBody.put("userName", userName);
+            responseBody.put("path", "/");
             return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.SIGN_IN_SUCCESS, responseBody), HttpStatus.OK);
         }
 

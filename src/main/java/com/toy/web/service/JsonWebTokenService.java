@@ -21,9 +21,11 @@ public class JsonWebTokenService {
         Date expirationDate = new Date(now.getTime() + expiration); // 현재 시간 + 유효기간
 
         SecretKey key = Jwts.SIG.HS256.key().build();
-        String jws = Jwts.builder().signWith(key).subject(userId).issuedAt(now).expiration(expirationDate).compact();
-        System.out.println("jws = " + jws);
-
-        return jws;
+        return Jwts.builder()
+                .signWith(key)
+                .subject(userId)
+                .issuedAt(now)
+                .expiration(expirationDate)
+                .compact();
     }
 }

@@ -13,10 +13,16 @@ const login = () => {
         },
         success: (response) => {
             console.log(response);
+            if(response.data) {
+                const date = new Date();
+                date.setHours(date.getHours() + 1);
+                date.toUTCString();
+                document.cookie = `jwt=${response.data.jwt}; expires=${date}; path=/`;
+                window.location.replace(response.data.path);
+            }
         }
-    })
+    });
 }
-
 const signInBtn = document.getElementById("sign-in-btn");
 signInBtn.addEventListener("click", login);
 
