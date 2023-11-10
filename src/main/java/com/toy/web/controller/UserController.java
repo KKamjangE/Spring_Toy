@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @PostMapping("/in")
-    public ResponseEntity<ResponseData>  signIn(LoginRequest loginRequest) { // 로그인
+    public ResponseEntity<ResponseData>  signIn(@RequestBody LoginRequest loginRequest) { // 로그인
 
         String userName = userService.loginCheck(loginRequest);
 
@@ -51,8 +52,8 @@ public class UserController {
     }
 
     @PostMapping("/up")
-    public ResponseEntity<ResponseData> signUp(JoinRequest joinRequest) { // 회원가입
-
+    public ResponseEntity<ResponseData> signUp(@RequestBody JoinRequest joinRequest) { // 회원가입
+        System.out.println("joinRequest = " + joinRequest);
         JoinRequest checkJoinRequest = userService.findByUserId(joinRequest.getUserId());
         String encodedPassword = BCrypt.hashpw(joinRequest.getPassword(), BCrypt.gensalt());
         joinRequest.setPassword(encodedPassword);
