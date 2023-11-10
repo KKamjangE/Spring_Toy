@@ -35,7 +35,6 @@ public class UserController {
 
     @PostMapping("/in")
     public ResponseEntity<ResponseData>  signIn(@RequestBody LoginRequest loginRequest) { // 로그인
-
         String userName = userService.loginCheck(loginRequest);
 
         if(userName == null) {
@@ -45,7 +44,6 @@ public class UserController {
             Map<String, Object> responseBody = new HashMap<>();
             responseBody.put("jwt", token);
             responseBody.put("userName", userName);
-            responseBody.put("path", "/");
             return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.SIGN_IN_SUCCESS, responseBody), HttpStatus.OK);
         }
 
