@@ -21,8 +21,8 @@ public class CenterServiceImpl implements CenterService{
     }
 
     @Override
-    public CenterRequest saveCenter(CenterRequest centerRequest) {
-        return centerRepository.save(centerRequest);
+    public void saveCenter(CenterRequest centerRequest) {
+        centerRepository.save(centerRequest);
     }
 
     @Override
