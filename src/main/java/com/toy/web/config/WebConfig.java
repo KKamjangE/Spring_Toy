@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer { // web mvc 설정 파일
         registry.addMapping("/**") // endpoint
                 .allowedOrigins("http://localhost:5173") // 허용할 origin
                 .allowedMethods("*") // 허용할 메서드
-                .allowCredentials(false) // 쿠키 인증 요청 여부
+                .allowCredentials(true) // 쿠키 인증 요청 여부
                 .maxAge(3000); // pre-flight 리퀘스트 캐싱 시간
     }
 }
