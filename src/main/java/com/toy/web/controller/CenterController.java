@@ -26,18 +26,19 @@ public class CenterController {
     @GetMapping
     public ResponseEntity<ResponseData> getCenters() {
         List<CenterRequest> allCenters = centerService.findAllCenters();
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("centers", allCenters);
-        return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.GET_CENTERS_SUCCESS, responseBody), HttpStatus.OK);
+        return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.GET_CENTERS_SUCCESS, allCenters), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<ResponseData> postCenter() {
-        return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.POST_CENTER_SUCCESS), HttpStatus.OK);
+    @ResponseBody
+    public ResponseEntity<ResponseData> postCenter(@RequestBody CenterRequest centerRequest) {
+        centerService.saveCenter(centerRequest);
+        return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.POST_CENTER_SUCCESS, centerRequest), HttpStatus.OK);
     }
 
     @DeleteMapping
-    public ResponseEntity<ResponseData> deleteCenter() {
+    public ResponseEntity<ResponseData> deleteCenter(@RequestParam String idx) {
+        centerService.deleteCenter(idx);
         return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.DELETE_CENTER_SUCCESS), HttpStatus.OK);
     }
 }
