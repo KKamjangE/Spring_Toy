@@ -1,14 +1,13 @@
 package com.toy.web.service;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class JsonWebTokenService {
@@ -16,16 +15,35 @@ public class JsonWebTokenService {
     @Value("${jwt.expritation}")
     private long expiration; // jwt 유효기간
 
+    @Value("${jwt.secretKey}")
+    private String secretKey;
+
+    public SecretKey generateSecretKey() {
+        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
+    }
+
     public String generateToken(String userId) {
         Date now = new Date(); // 현재 시간
         Date expirationDate = new Date(now.getTime() + expiration); // 현재 시간 + 유효기간
 
-        SecretKey key = Jwts.SIG.HS256.key().build();
+        SecretKey key = generateSecretKey();
+
         return Jwts.builder()
                 .signWith(key)
                 .subject(userId)
                 .issuedAt(now)
                 .expiration(expirationDate)
                 .compact();
+    }
+
+    public String checkToken(String jws) {
+        SecretKey key = generateSecretKey();
+
+        String subject = Jwts.parser().verifyWith(key).build().parseSignedClaims(jws).getPayload().getSubject();
+        if(subject.isEmpty()) {
+            return null;
+        } else {
+            return subject;
+        }
     }
 }
