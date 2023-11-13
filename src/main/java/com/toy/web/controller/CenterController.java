@@ -52,7 +52,6 @@ public class CenterController {
         String userName = jsonWebTokenService.checkToken(authorizationHeader.split(" ")[1]);
 
         CenterRequest centerCheck = centerService.findByUserNameAndId(userName, idx);
-        System.out.println("centerCheck = " + centerCheck);
         if (centerCheck == null) {
             return new ResponseEntity<>(ResponseData.res(StatusCode.NOT_FOUND, ResponseMessage.DELETE_CENTER_FAIL, idx), HttpStatus.OK);
         } else {

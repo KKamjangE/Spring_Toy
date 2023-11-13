@@ -19,6 +19,8 @@ public class JsonWebTokenService {
     private String secretKey;
 
     public SecretKey generateSecretKey() {
+        // 문자열을 UTF-8 문자 인코딩으로 바이트 배열로 변환한다
+        // 해당 바이트 배열을 사용하여 HMAC-SHA 알고리즘에 기반한 SecretKey를 생성한다
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
