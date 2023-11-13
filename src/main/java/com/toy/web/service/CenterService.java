@@ -5,7 +5,8 @@ import com.toy.web.dto.CenterRequest;
 import java.util.List;
 
 public interface CenterService {
-    List<CenterRequest> findAllCenters();
+    List<CenterRequest> findAllCenters(String userName);
     void saveCenter(CenterRequest centerRequest);
-    void deleteCenter(String id);
+    CenterRequest deleteCenter(String userName, String id);
+    CenterRequest findByUserNameAndId(String userName, String id);
 }
