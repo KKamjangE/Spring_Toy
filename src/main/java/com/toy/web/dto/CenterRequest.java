@@ -8,8 +8,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "centers")
 public class CenterRequest {
     @Id
-    private String id;
+    private String _id;
 
+    private String id;
+    private String userName;
     private String address;
     private String centerName;
     private String updatedAt;
