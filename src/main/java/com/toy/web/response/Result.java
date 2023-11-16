@@ -9,13 +9,10 @@ public enum Result {
     DELETE("2", "삭제 완료"),
     ALREADY_CREATED("3", "이미 저장된 데이터 입니다."),
 
-    SIGN_IN_SUCCESS("00", "로그인 성공"),
-    SIGN_IN_ID_MATCH_FAIL("01", "아이디가 맞지 않습니다."),
-    SIGN_IN_PASSWORD_MATCH_FAIL("02", "비밀번호가 맞지 않습니다."),
-    SIGN_UP_SUCCESS("10", "회원가입 성공"),
-    SIGN_UP_FAIL("11", "회원가입에 실패했습니다."),
-
-    NOT_FOUND("40", "해당 데이터를 찾을 수 없습니다.");
+    SIGN_IN_MATCH_FAIL("10001", "아이디 또는 비밀번호가 일치하지 않습니다."),
+    SIGN_UP_ALREADY_ID("10002", "이미 존재하는 아이디 입니다."),
+    SIGN_UP_FAIL("10003", "회원가입에 실패했습니다."),
+    NOT_FOUND("10004", "해당 데이터를 찾을 수 없습니다.");
 
     private final String code;
 
