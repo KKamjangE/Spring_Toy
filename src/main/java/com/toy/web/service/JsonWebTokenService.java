@@ -26,7 +26,7 @@ public class JsonWebTokenService {
 
     public String generateToken(String userId) {
         Date now = new Date(); // 현재 시간
-        Date expirationDate = new Date(now.getTime() + expiration); // 현재 시간 + 유효기간
+        Date expirationDate = new Date(now.getTime() + (1000 * 60 * expiration)); // 현재 시간 + 유효기간
 
         SecretKey key = generateSecretKey();
 
