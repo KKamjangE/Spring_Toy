@@ -18,14 +18,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String loginCheck(LoginRequest loginRequest) {
+    public JoinRequest loginCheck(LoginRequest loginRequest) {
         JoinRequest userInfo = userRepository.findByUserId(loginRequest.getUserId());
 
-        if(BCrypt.checkpw(loginRequest.getPassword(), userInfo.getPassword())) {
-            return userInfo.getName();
-        } else {
-            return null;
-        }
+        if(userInfo != null) {
+            if(BCrypt.checkpw(loginRequest.getPassword(), userInfo.getPassword())) {
+                return userInfo;
+            } else {
+                return null;
+            }
+        };
+
+        return null;
     }
 
     @Override

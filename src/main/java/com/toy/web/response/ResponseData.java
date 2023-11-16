@@ -8,28 +8,28 @@ import lombok.Data;
 @AllArgsConstructor // 생성자를 자동으로 만들어 준다
 @Builder
 public class ResponseData<T> {
-    private int statusCode;
-    private String responseMessage;
+    private String code;
+    private String message;
     private T data;
 
     // 기본 초기화
-    public ResponseData(final int statusCode, final String responseMessage) {
-        this.statusCode = statusCode;
-        this.responseMessage = responseMessage;
+    public ResponseData(final String code, final String message) {
+        this.code = code;
+        this.message = message;
         this.data = null;
     }
 
     // 데이터가 없는 경우
-    public static<T> ResponseData<T> res(final int statusCode, final String responseMessage) {
-        return res(statusCode, responseMessage, null);
+    public static<T> ResponseData<T> res(final String code, final String message) {
+        return res(code, message, null);
     }
 
     // 데이터가 있는 경우
-    public static<T> ResponseData<T> res(final int statusCode, final String responseMessage, final T t) {
+    public static<T> ResponseData<T> res(final String code, final String message, final T t) {
         return ResponseData.<T>builder()
                 .data(t)
-                .statusCode(statusCode)
-                .responseMessage(responseMessage)
+                .code(code)
+                .message(message)
                 .build();
     }
 }
