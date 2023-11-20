@@ -10,7 +10,7 @@ public class CenterRequest {
     @Id
     private String _id;
 
-    private int id;
+    private String id;
     private String userName;
     private String address;
     private String centerName;

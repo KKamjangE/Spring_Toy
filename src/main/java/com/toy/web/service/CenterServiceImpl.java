@@ -26,12 +26,12 @@ public class CenterServiceImpl implements CenterService{
     }
 
     @Override
-    public CenterRequest deleteCenter(String userName, int id) {
+    public CenterRequest deleteCenter(String userName, String id) {
         return centerRepository.deleteByUserNameAndId(userName, id);
     }
 
     @Override
-    public CenterRequest findByUserNameAndId(String userName, int id) {
+    public CenterRequest findByUserNameAndId(String userName, String id) {
         return centerRepository.findByUserNameAndId(userName, id);
     }
 }
