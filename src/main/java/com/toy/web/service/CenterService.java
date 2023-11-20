@@ -7,6 +7,6 @@ import java.util.List;
 public interface CenterService {
     List<CenterRequest> findAllCenters(String userName);
     void saveCenter(CenterRequest centerRequest);
-    CenterRequest deleteCenter(String userName, String id);
-    CenterRequest findByUserNameAndId(String userName, String id);
+    CenterRequest deleteCenter(String userName, int id);
+    CenterRequest findByUserNameAndId(String userName, int id);
 }

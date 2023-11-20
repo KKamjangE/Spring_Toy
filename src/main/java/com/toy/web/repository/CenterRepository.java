@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface CenterRepository extends MongoRepository<CenterRequest, String> {
     List<CenterRequest> findAllByUserName(String userName);
-    CenterRequest findByUserNameAndId(String userName, String id);
+    CenterRequest findByUserNameAndId(String userName, int id);
 
-    CenterRequest deleteByUserNameAndId(String userName, String id);
+    CenterRequest deleteByUserNameAndId(String userName, int id);
 }
