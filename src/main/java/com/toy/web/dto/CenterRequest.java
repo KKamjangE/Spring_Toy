@@ -18,5 +18,5 @@ public class CenterRequest {
     private float lat;
     private float lng;
     private String phoneNumber;
-//    private String centerType;
+    private String centerType;
 }
