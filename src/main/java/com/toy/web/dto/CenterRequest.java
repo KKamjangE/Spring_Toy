@@ -15,4 +15,8 @@ public class CenterRequest {
     private String address;
     private String centerName;
     private String updatedAt;
+    private float lat;
+    private float lng;
+    private String phoneNumber;
+//    private String centerType;
 }
