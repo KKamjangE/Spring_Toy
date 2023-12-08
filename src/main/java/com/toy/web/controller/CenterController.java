@@ -1,16 +1,15 @@
 package com.toy.web.controller;
 
 import com.toy.web.dto.CenterRequest;
-import com.toy.web.response.ResponseData;
-import com.toy.web.response.ResponseMessage;
-import com.toy.web.response.StatusCode;
+import com.toy.web.response.*;
 import com.toy.web.service.CenterService;
 import com.toy.web.service.JsonWebTokenService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/center")
@@ -25,38 +24,45 @@ public class CenterController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseData> getCenters(@RequestHeader("Authorization") String authorizationHeader) {
+    public ResponseEntity<Response.Body> getCenters(@RequestHeader("Authorization") String authorizationHeader) {
         String userName = jsonWebTokenService.checkToken(authorizationHeader.split(" ")[1]);
 
         List<CenterRequest> allCenters = centerService.findAllCenters(userName);
 
-        return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.GET_CENTERS_SUCCESS, allCenters), HttpStatus.OK);
+        return new ResponseSuccess().success(allCenters);
     }
 
     @PostMapping
-    public ResponseEntity<ResponseData> postCenter(@RequestHeader("Authorization") String authorizationHeader, @RequestBody CenterRequest centerRequest) {
+    public ResponseEntity<Response.Body> postCenter(@RequestHeader("Authorization") String authorizationHeader, @RequestBody CenterRequest centerRequest) {
         String userName = jsonWebTokenService.checkToken(authorizationHeader.split(" ")[1]);
 
         CenterRequest checkCenter = centerService.findByUserNameAndId(userName, centerRequest.getId());
         if (checkCenter == null) {
             centerRequest.setUserName(userName);
             centerService.saveCenter(centerRequest);
-            return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.POST_CENTER_SUCCESS, centerRequest), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(ResponseData.res(StatusCode.CONFLICT, ResponseMessage.POST_CENTER_CONFLICT, centerRequest), HttpStatus.OK);
+            Map<String, Object> response = new HashMap<>();
+            response.put("code", Result.ALREADY_CREATED.getCode());
+            response.put("msg", Result.ALREADY_CREATED.getDescription());
+            return new ResponseSuccess(response).success();
         }
+
+        return new ResponseSuccess().success();
     }
 
     @DeleteMapping
-    public ResponseEntity<ResponseData> deleteCenter(@RequestHeader("Authorization") String authorizationHeader, @RequestParam String idx) {
+    public ResponseEntity<Response.Body> deleteCenter(@RequestHeader("Authorization") String authorizationHeader, @RequestParam String idx) {
         String userName = jsonWebTokenService.checkToken(authorizationHeader.split(" ")[1]);
 
         CenterRequest centerCheck = centerService.findByUserNameAndId(userName, idx);
         if (centerCheck == null) {
-            return new ResponseEntity<>(ResponseData.res(StatusCode.NOT_FOUND, ResponseMessage.DELETE_CENTER_FAIL, idx), HttpStatus.OK);
+            Map<String, Object> response = new HashMap<>();
+            response.put("code", Result.NOT_FOUND.getCode());
+            response.put("msg", Result.NOT_FOUND.getDescription());
+            return new ResponseSuccess(response).success();
         } else {
             CenterRequest centerRequest = centerService.deleteCenter(userName, idx);
-            return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.DELETE_CENTER_SUCCESS, centerRequest), HttpStatus.OK);
         }
+        return new ResponseSuccess().success();
     }
 }
