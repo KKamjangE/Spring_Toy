@@ -2,9 +2,7 @@ package com.toy.web.controller;
 
 import com.toy.web.dto.JoinRequest;
 import com.toy.web.dto.LoginRequest;
-import com.toy.web.response.ResponseData;
-import com.toy.web.response.ResponseMessage;
-import com.toy.web.response.StatusCode;
+import com.toy.web.response.*;
 import com.toy.web.service.JsonWebTokenService;
 import com.toy.web.service.UserService;
 import org.mindrot.jbcrypt.BCrypt;
@@ -34,23 +32,22 @@ public class UserController {
     }
 
     @PostMapping("/in")
-    public ResponseEntity<ResponseData>  signIn(@RequestBody LoginRequest loginRequest) { // 로그인
-        String userName = userService.loginCheck(loginRequest);
+    public ResponseEntity<Object>  signIn(@RequestBody LoginRequest loginRequest) { // 로그인
+        JoinRequest userInfo = userService.loginCheck(loginRequest);
 
-        if(userName == null) {
-            return new ResponseEntity<>(ResponseData.res(StatusCode.NOT_FOUND, ResponseMessage.SIGN_IN_FAIL), HttpStatus.OK);
-        } else  {
-            String token = jsonWebTokenService.generateToken(loginRequest.getUserId());
-            Map<String, Object> responseBody = new HashMap<>();
-            responseBody.put("jwt", token);
-            responseBody.put("userName", userName);
-            return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.SIGN_IN_SUCCESS, responseBody), HttpStatus.OK);
+        if(userInfo == null) {
+            return new ResponseEntity<>(ResponseData.res(Result.SIGN_IN_MATCH_FAIL.getCode(), Result.SIGN_IN_MATCH_FAIL.getDescription()), HttpStatus.CONFLICT);
         }
 
+        String token = jsonWebTokenService.generateToken(loginRequest.getUserId());
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("jwt", token);
+        responseBody.put("userName", userInfo.getName());
+        return new ResponseEntity<>(ResponseData.res(Result.SUCCESS.getCode(), Result.SUCCESS.getDescription(), responseBody), HttpStatus.OK);
     }
 
     @PostMapping("/up")
-    public ResponseEntity<ResponseData> signUp(@RequestBody JoinRequest joinRequest) { // 회원가입
+    public ResponseEntity<Object> signUp(@RequestBody JoinRequest joinRequest) { // 회원가입
         System.out.println("joinRequest = " + joinRequest);
         JoinRequest checkJoinRequest = userService.findByUserId(joinRequest.getUserId());
         String encodedPassword = BCrypt.hashpw(joinRequest.getPassword(), BCrypt.gensalt());
@@ -58,9 +55,9 @@ public class UserController {
 
         if(checkJoinRequest == null) {
             userService.join(joinRequest);
-            return new ResponseEntity<>(ResponseData.res(StatusCode.OK, ResponseMessage.SIGN_UP_SUCCESS), HttpStatus.OK);
+            return new ResponseEntity<>(ResponseData.res(Result.SUCCESS.getCode(), Result.SUCCESS.getDescription()), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(ResponseData.res(StatusCode.CONFLICT, ResponseMessage.ALREADY_USER), HttpStatus.OK);
+            return new ResponseEntity<>(ResponseData.res(Result.SIGN_UP_ALREADY_ID.getCode(), Result.SIGN_UP_ALREADY_ID.getDescription()), HttpStatus.CONFLICT);
         }
 
     }
